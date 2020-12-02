@@ -12,7 +12,7 @@
 using namespace std;
 
 #define FILE_PATH   "./"
-#define FILE_NAME   "tabs.html"
+#define FILE_NAME   "test.html"
 
 int main()
 {
