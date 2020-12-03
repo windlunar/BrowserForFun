@@ -15,7 +15,7 @@ class PARSE{
         int isHtml_Format();
         void initTree() ;
         void createRootNode();
-        int createChildNode(int noteType ,std::string tagname ,NODE_t *parent_node) ;
+        int createChildNode(int note_type ,std::string tagnameInput ,std::string text_str ,NODE_t *parent_node) ;
         void printTree() ;
 
         std::string getTagName(std::string strVec);

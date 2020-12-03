@@ -57,7 +57,7 @@ void PARSE::createRootNode()
 
 
 
-int PARSE::createChildNode(int note_type ,std::string tagnameInput ,NODE_t *parent_node)
+int PARSE::createChildNode(int note_type ,std::string tagnameInput ,std::string text_str ,NODE_t *parent_node)
 {
     std::cout << "Node index " << tree.notUsedNodeIndex << " Not used yet." << std::endl;
     
@@ -76,7 +76,6 @@ int PARSE::createChildNode(int note_type ,std::string tagnameInput ,NODE_t *pare
     std::cout 
         << "tag Name :" 
         << tree.node[tree.notUsedNodeIndex].tagName 
-        << "\n"
         << std::endl;
 
 
@@ -85,9 +84,13 @@ int PARSE::createChildNode(int note_type ,std::string tagnameInput ,NODE_t *pare
         tree.node[tree.notUsedNodeIndex].textData = "NONE" ;
 
     }else{
-        tree.node[tree.notUsedNodeIndex].textData = "Text data Not implement Yet" ; //Not implement Yet.
+        tree.node[tree.notUsedNodeIndex].textData = text_str ; 
     }
-
+    std::cout 
+        << "text data :" 
+        << tree.node[tree.notUsedNodeIndex].textData 
+        << "\n"
+        << std::endl;
 
     //將parentNode 指向該node的 parent
     tree.node[tree.notUsedNodeIndex].parentNode = parent_node ;

@@ -74,7 +74,7 @@ int main()
     << endl;
 
 
-    int head_index = parse.createChildNode(node_type ,tag ,&tree.node[ROOT]);
+    int currentNode_index = parse.createChildNode(node_type ,tag ,text_str ,&tree.node[ROOT]);
     //int head_index = parse.createChildNode(ELEMENT_NODE_TYPE ,head_TAGNAME ,&tree.node[ROOT]);
     //int title_index = parse.createChildNode(TEXT_NODE_TYPE ,title_TAGNAME ,&tree.node[head_index]);
 
