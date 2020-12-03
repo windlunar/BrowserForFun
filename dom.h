@@ -4,37 +4,49 @@
 #include <stdio.h>
 #include <iostream>
 #include <string>
+#include <vector>
+
+#define ROOT    0
+
+#define html_TAGNAME    "html" 
+#define head_TAGNAME    "head"
+#define body_TAGNAME    "body"
+#define p_TAGNAME       "p" 
+#define h1_TAGNAME      "h1" 
+#define title_TAGNAME   "title"
+
+
+#define ROOT_ELEMENT_NODE_TYPE    0
+#define ELEMENT_NODE_TYPE    1
+#define TEXT_NODE_TYPE    2
+
 
 
 enum NODE_TYPE{
-    element = 0,
-    text = 1
+    rootElement = 0,
+    element = 1,
+    text = 2
 };
+
+
+
 
 struct NODE_t{
-    NODE_t *childNode ;
+    std::vector<NODE_t *> childrenNode ;
+    NODE_t *parentNode;
+
+    std::string tagName ;    
     enum NODE_TYPE noteType ;
 
-};
-
-struct ELEMENT{
-    std::string tagName ;
-    std::string attribute ;
-};
-
-struct TEXT{
     std::string textData ;
 };
 
 
-struct TAGNAME{
-    std::string html = "html" ;
-    std::string head = "head" ;
-    std::string body = "body" ;
-    std::string p = "p" ;
-    std::string h1 = "h1" ;
-};
 
 
+
+
+extern NODE_t document ;
+extern NODE_t node[64] ;
 
 #endif

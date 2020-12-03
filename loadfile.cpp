@@ -5,7 +5,8 @@
 
 
 
-LOADFILE::LOADFILE(std::string inputPath ,std::string inputFileName){
+LOADFILE::LOADFILE(std::string inputPath ,std::string inputFileName)
+{
     this->filePath = inputPath ;
     this->fileName = inputFileName ;
     this->path = this->filePath + this->fileName ;
@@ -14,7 +15,8 @@ LOADFILE::LOADFILE(std::string inputPath ,std::string inputFileName){
 LOADFILE::~LOADFILE(){}
 
 
-std::string LOADFILE::loadFileTest(){
+std::string LOADFILE::loadFileTest()
+{
     std::cout << "path : " << this->filePath << std::endl;
 
     std::string readDataBuf ;
@@ -35,8 +37,6 @@ std::string LOADFILE::loadFileTest(){
 
 std::vector<std::string> LOADFILE::loadFile()
 {
-    //std::cout << "path : " << this->filePath << std::endl;
-
     std::vector<std::string> readHTML_vec ;
     std::fstream fs(path.c_str(),std::fstream::in) ;
 

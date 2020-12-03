@@ -7,7 +7,7 @@
 
 #include "loadfile.h"
 #include "parse.h"
-//#include "dom.h"
+#include "dom.h"
 
 using namespace std;
 
@@ -34,12 +34,20 @@ int main()
     cout << "parse.docType :" << parse.docType << endl;
     cout << "parse.isHtml_Format() :" << rtn << endl;
 
+    parse.initTree();
+    parse.createRootNode();
+    int head_index = parse.createChildNode(ELEMENT_NODE_TYPE ,head_TAGNAME ,&tree.node[ROOT]);
+    int title_index = parse.createChildNode(TEXT_NODE_TYPE ,title_TAGNAME ,&tree.node[head_index]);
+
+    int body_index = parse.createChildNode(ELEMENT_NODE_TYPE ,body_TAGNAME ,&tree.node[ROOT]);
+    int p_index = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
 
     
 
-    //NODE_t node ;
-    //node.noteType = text ;
-    //cout << node.noteType << endl;
+
+    //print Tree
+    parse.printTree();
+
 
     return 0 ;
 }

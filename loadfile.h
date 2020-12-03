@@ -7,7 +7,8 @@
 #include <fstream>
 #include <vector>
 
-class LOADFILE{
+class LOADFILE
+{
     public:
         LOADFILE(std::string path ,std::string fileName) ;
         ~LOADFILE() ;
