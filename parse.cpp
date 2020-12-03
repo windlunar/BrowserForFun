@@ -142,4 +142,12 @@ void PARSE::printTree(){
         << "," 
         << tree.node[ROOT].childrenNode[1]->childrenNode[0]->noteType 
         << std::endl ;
+
+
+    std::cout 
+        << "       " 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->tagName
+        << "," 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
+        << std::endl ;
 }

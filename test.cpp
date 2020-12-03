@@ -40,7 +40,8 @@ int main()
     int title_index = parse.createChildNode(TEXT_NODE_TYPE ,title_TAGNAME ,&tree.node[head_index]);
 
     int body_index = parse.createChildNode(ELEMENT_NODE_TYPE ,body_TAGNAME ,&tree.node[ROOT]);
-    int p_index = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
+    int p_index1 = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
+    int p_index2 = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
 
     
 
