@@ -18,6 +18,10 @@ class PARSE{
         int createChildNode(int noteType ,std::string tagname ,NODE_t *parent_node) ;
         void printTree() ;
 
+        std::string getTagName(std::string strVec);
+        int getNodeType(std::string tag_name_input);
+        std::string getTextDate(std::string strVec);
+
         std::string docType ;
         std::vector<std::string> vectorHTML ;
 };

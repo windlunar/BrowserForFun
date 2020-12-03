@@ -11,6 +11,8 @@
 #define html_TAGNAME    "html" 
 #define head_TAGNAME    "head"
 #define body_TAGNAME    "body"
+
+//Text
 #define p_TAGNAME       "p" 
 #define h1_TAGNAME      "h1" 
 #define title_TAGNAME   "title"

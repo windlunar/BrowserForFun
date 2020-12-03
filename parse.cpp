@@ -151,3 +151,45 @@ void PARSE::printTree(){
         << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
         << std::endl ;
 }
+
+
+std::string PARSE::getTagName(std::string strVec)
+{
+    std::string tag ;
+    if(strVec[2] == '/'){
+        std::cout << "Just Closing tag" << std::endl;
+        tag = "NA" ;
+    }else{
+        tag = strVec.substr(strVec.find_first_of("<") + 1
+                                ,(strVec.find_first_of(">") - strVec.find_first_of("<"))-1) ;
+    }
+    return tag ;
+}
+
+
+
+int PARSE::getNodeType(std::string strVec)
+{
+    if(getTagName(strVec) == title_TAGNAME || getTagName(strVec) == p_TAGNAME){
+        return TEXT_NODE_TYPE ;
+    }else{
+        return ELEMENT_NODE_TYPE ;
+    }
+}
+
+
+
+std::string PARSE::getTextDate(std::string strVec)
+{
+    std::string text_str ;
+
+    if(getTagName(strVec) == title_TAGNAME || getTagName(strVec) == p_TAGNAME){
+        text_str = strVec.substr(strVec.find(">") + 1
+                                ,(strVec.find("</") - strVec.find(">"))-1) ;
+    }else{
+        std::cout << "In getTextDate(), Not text node." << std::endl ;
+        text_str = "NONE" ;
+    }
+
+    return text_str ;
+}
