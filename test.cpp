@@ -42,7 +42,6 @@ int main()
 "/**************************************************************************************************************/"
     << endl;
 
-    
     cout << readHTML[1].size() << endl ;
 
     //擷取 tag name
@@ -58,35 +57,15 @@ int main()
     cout << "text data :" << text_str << endl;
     cout << "node type :" << node_type << endl;
 
-
-
-    //if(readHTML[1].find("</") == string::npos){
-    //    cout << "No Pos" << endl ;
-    //}else{
-    //    cout << readHTML[1].find_first_of("/") << endl ;
-    //}
-
-
-
-
     cout << 
 "/**************************************************************************************************************/"
     << endl;
 
 
-    int currentNode_index = parse.createChildNode(node_type ,tag ,text_str ,&tree.node[ROOT]);
-    //int head_index = parse.createChildNode(ELEMENT_NODE_TYPE ,head_TAGNAME ,&tree.node[ROOT]);
-    //int title_index = parse.createChildNode(TEXT_NODE_TYPE ,title_TAGNAME ,&tree.node[head_index]);
-
-    //int body_index = parse.createChildNode(ELEMENT_NODE_TYPE ,body_TAGNAME ,&tree.node[ROOT]);
-    //int p_index1 = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
-    //int p_index2 = parse.createChildNode(TEXT_NODE_TYPE, p_TAGNAME ,&tree.node[body_index]) ;
-
-    
-
+    parse.createDomTree();
 
     //print Tree
-    //parse.printTree();
+    parse.printTreeForTest();
 
 
     return 0 ;

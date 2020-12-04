@@ -109,58 +109,23 @@ int PARSE::createChildNode(int note_type ,std::string tagnameInput ,std::string 
 }
 
 
-void PARSE::printTree(){
-    std::cout << "\nPrint Tree :" << std::endl;
-    std::cout << "Size of Root's children :" << tree.node[ROOT].childrenNode.size() << std::endl ;
-    
-    std::cout 
-        << "Root node\n:" 
-        << tree.node[ROOT].tagName
-        << "," << tree.node[ROOT].noteType 
-        << std::endl;
 
-    std::cout 
-        << "   " 
-        << tree.node[ROOT].childrenNode[0]->tagName
-        << "," << tree.node[ROOT].childrenNode[0]->noteType 
-        << std::endl ;
+NODE_t *PARSE::createChildReturnNodePtr(int note_type ,std::string tagnameInput ,std::string text_str ,NODE_t *parent_node)
+{
+    int index = createChildNode(note_type ,tagnameInput ,text_str ,parent_node) ;
+    return &tree.node[index] ;
 
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->noteType 
-        << std::endl ;
-
-
-    std::cout 
-        << "   " << tree.node[ROOT].childrenNode[1]->tagName
-        << "," << tree.node[ROOT].childrenNode[1]->noteType << std::endl ;
-
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->noteType 
-        << std::endl ;
-
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
-        << std::endl ;
 }
+
+
+
 
 
 std::string PARSE::getTagName(std::string strVec)
 {
     std::string tag ;
     if(strVec[2] == '/'){
-        std::cout << "Just Closing tag" << std::endl;
+        std::cout << "Closing tag" << std::endl;
         tag = "NA" ;
     }else{
         tag = strVec.substr(strVec.find_first_of("<") + 1
@@ -195,4 +160,108 @@ std::string PARSE::getTextDate(std::string strVec)
     }
 
     return text_str ;
+    
+}
+
+
+
+void PARSE::createDomTree()
+{
+    NODE_t *parent_node_ptr ;
+    NODE_t *current_node_ptr = &tree.node[ROOT] ;
+
+    for(int k = 2 ; k < vectorHTML.size() ;k++){
+
+        if( (vectorHTML[k-1].find("/") == std::string::npos ) && (vectorHTML[k][1] != '/') ){
+            parent_node_ptr = current_node_ptr ;
+
+            std::cout << "condition 1" << std::endl ;
+            std::cout << "parent node tag :" << parent_node_ptr->tagName << std::endl;
+
+            current_node_ptr = this->createChildReturnNodePtr(this->getNodeType(vectorHTML[k]) 
+                                                            ,this->getTagName(vectorHTML[k]) 
+                                                            ,this->getTextDate(vectorHTML[k]) 
+                                                            ,parent_node_ptr) ;
+            
+            
+        }else if( (vectorHTML[k-1].find("/") != std::string::npos ) && (vectorHTML[k][1] == '/') ){
+            std::cout << "condition 2" << std::endl ;
+            std::cout << "parent node tag :" << parent_node_ptr->tagName << std::endl;
+
+            current_node_ptr = current_node_ptr->parentNode ;
+            parent_node_ptr = current_node_ptr->parentNode ;
+            
+                                                
+        }else if((vectorHTML[k-1].find("/") != std::string::npos ) && (vectorHTML[k][1] != '/') ){
+            
+            std::cout << "condition 3" << std::endl ; 
+            std::cout << "parent node tag :" << parent_node_ptr->tagName << std::endl;  
+
+            current_node_ptr = this->createChildReturnNodePtr(this->getNodeType(vectorHTML[k]) 
+                                                            ,this->getTagName(vectorHTML[k]) 
+                                                            ,this->getTextDate(vectorHTML[k]) 
+                                                            ,parent_node_ptr) ;
+
+        }else{
+            std::cout << "Not supported HTML format." << std::endl ;
+        }
+        
+    }    
+}
+
+
+
+
+void PARSE::printTreeForTest(){
+    std::cout << "\nPrint Tree :" << std::endl;
+    std::cout << "Size of Root's children :" << tree.node[ROOT].childrenNode.size() << std::endl ;
+    
+    std::cout 
+        << "Root node\n:" 
+        << tree.node[ROOT].tagName
+        << "," << tree.node[ROOT].noteType 
+        << "," << tree.node[ROOT].textData 
+        << std::endl;
+
+    std::cout 
+        << "   " 
+        << tree.node[ROOT].childrenNode[0]->tagName
+        << "," << tree.node[ROOT].childrenNode[0]->noteType 
+        << "," << tree.node[ROOT].childrenNode[0]->textData
+        << std::endl ;
+        
+
+
+    std::cout 
+        << "       " 
+        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->tagName
+        << "," 
+        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->noteType
+        << "," << tree.node[ROOT].childrenNode[0]->childrenNode[0]->textData 
+        << std::endl ;
+
+
+    std::cout 
+        << "   " << tree.node[ROOT].childrenNode[1]->tagName
+        << "," << tree.node[ROOT].childrenNode[1]->noteType 
+        << "," << tree.node[ROOT].childrenNode[1]->textData
+        << std::endl ;
+
+
+    std::cout 
+        << "       " 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->tagName
+        << "," 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->noteType 
+        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[0]->textData
+        << std::endl ;
+
+
+    std::cout 
+        << "       " 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->tagName
+        << "," 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
+        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[1]->textData
+        << std::endl ;
 }

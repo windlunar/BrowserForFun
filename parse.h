@@ -16,11 +16,14 @@ class PARSE{
         void initTree() ;
         void createRootNode();
         int createChildNode(int note_type ,std::string tagnameInput ,std::string text_str ,NODE_t *parent_node) ;
-        void printTree() ;
+        NODE_t *createChildReturnNodePtr(int note_type ,std::string tagnameInput ,std::string text_str ,NODE_t *parent_node);
 
         std::string getTagName(std::string strVec);
         int getNodeType(std::string tag_name_input);
         std::string getTextDate(std::string strVec);
+        void createDomTree() ;
+
+        void printTreeForTest() ;
 
         std::string docType ;
         std::vector<std::string> vectorHTML ;
