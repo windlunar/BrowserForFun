@@ -1,3 +1,9 @@
+/**
+ * Date : 2020/12/5
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
+
 #ifndef __DOM_H__
 #define __DOM_H__
 
@@ -6,13 +12,15 @@
 #include <string>
 #include <vector>
 
+//root is the next tag of <!DOCTYPE html>
 #define ROOT    0
 
+//Element tag name
 #define html_TAGNAME    "html" 
 #define head_TAGNAME    "head"
 #define body_TAGNAME    "body"
 
-//Text
+//Text tag name
 #define p_TAGNAME       "p" 
 #define h1_TAGNAME      "h1" 
 #define title_TAGNAME   "title"

@@ -1,5 +1,11 @@
-#ifndef __LOADFILE_H__
-#define __LOADFILE_H__
+/**
+ * Date : 2020/12/5
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
+
+#ifndef __LOAD_FILE_H__
+#define __LOAD_FILE_H__
 
 #include <stdio.h>
 #include <iostream>
@@ -14,13 +20,11 @@ class LOADFILE
         ~LOADFILE() ;
         std::string loadFileTest();
         std::vector<std::string> loadFile();
-        std::vector<std::string> eraseSpace(std::vector<std::string> vec) ;
+        std::vector<std::string> deleteSpaceChar(std::vector<std::string> vec) ;
 
         std::string path ;
         std::string fileName ;
         std::string filePath ;
-
-        //std::string readLineBuf ;
 };
 
 

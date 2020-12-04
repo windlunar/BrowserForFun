@@ -1,3 +1,9 @@
+/**
+ * Date : 2020/12/5
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
+
 
 #include "parse.h"
 
@@ -263,5 +269,13 @@ void PARSE::printTreeForTest(){
         << "," 
         << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
         << "," << tree.node[ROOT].childrenNode[1]->childrenNode[1]->textData
+        << std::endl ;
+
+    std::cout 
+        << "       " 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[2]->tagName
+        << "," 
+        << tree.node[ROOT].childrenNode[1]->childrenNode[2]->noteType 
+        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[2]->textData
         << std::endl ;
 }

@@ -1,3 +1,8 @@
+/**
+ * Date : 2020/12/5
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
 
 
 #include "loadfile.h"
@@ -62,13 +67,13 @@ std::vector<std::string> LOADFILE::loadFile()
 
 /** 將前後的空格去除*/
 std::vector<std::string>
- LOADFILE::eraseSpace(std::vector<std::string> vec)
+ LOADFILE::deleteSpaceChar(std::vector<std::string> vec)
 {
-    for(int i = 0 ; i < vec.size(); i++){
-        if( !vec[i].empty() )
+    for(int k = 0 ; k < vec.size(); k++){
+        if( !vec[k].empty() )
         {
-            vec[i].erase(0,vec[i].find_first_not_of(" "));
-            vec[i].erase(vec[i].find_last_not_of(" ") + 1);
+            vec[k].erase(vec[k].find_last_not_of(" ") + 1);
+            vec[k].erase(0 ,vec[k].find_first_not_of(" "));
         }
     }
     return vec ;
