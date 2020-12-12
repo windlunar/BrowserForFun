@@ -8,15 +8,23 @@
 #include <unistd.h>
 #include <sys/types.h>
 
-#include <sys/socket.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
+
+#include <pthread.h>
 
 #include "server.h"
 
 
 
 using namespace std;
+
+
+void *request_handler(void *arg){
+	SERVER *server = (SERVER *)arg ;
+
+	server->socketReadTest(server->serverfd ,server->clientfd) ;
+
+	server->sendHtmlFile(server->serverfd ,server->clientfd ,server->html_file_path) ;
+}
 
 
 int main(int argc, char *argv[]) {
@@ -31,12 +39,22 @@ int main(int argc, char *argv[]) {
     }
 
 	
-	SERVER server(SERVER_PORT_NUM) ;
+	SERVER server(SERVER_PORT_NUM ,file_path) ;
+	pthread_t thread;
 
-	server.clientfd = server.socketAccept(server.serverfd ,&server.clientSocAddr) ;
-	server.socketReadTest(server.serverfd ,server.clientfd) ;
+	while(1){
+		server.clientfd = server.socketAccept(server.serverfd ,&server.clientSocAddr) ;
+		int client_fd = server.clientfd ;
 
-	server.sendHtmlFile(server.serverfd ,server.clientfd ,file_path) ;
+		if(client_fd < 0){
+			perror("Error!\n");
+		}else{
+			if(pthread_create(&thread ,NULL ,&request_handler ,&server) != 0 ){
+				perror("Create Thread Error!\n");
+			}
+		}
+	}
+
 
 
 	return 0 ;

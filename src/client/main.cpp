@@ -15,14 +15,14 @@
 #include "client.h"
 
 
+#define READ_BUF_SIZE	4096
+
 using namespace std;
-
-
 
 int main(int argc, char *argv[]) {
 	CLIENT client(SERVER_PORT_NUM) ;
 	string str ;
-	client.receiveHtmlFile(client.clientSocketfd ,1587 ,str ,CLIENT_FILE_PATH) ;
+	client.receiveHtmlFile(client.clientSocketfd ,READ_BUF_SIZE ,str ,CLIENT_FILE_PATH) ;
 
 	//open browser
 	int rtn = fork();

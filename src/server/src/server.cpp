@@ -20,7 +20,8 @@
 
 
 
-SERVER::SERVER(int portNum){
+SERVER::SERVER(int portNum ,std::string html_path){
+	this->html_file_path = html_path ;
 	this->serverfd = -1 ;
 	this->clientfd = -1 ;
 	this->ServerPortNum = portNum ;

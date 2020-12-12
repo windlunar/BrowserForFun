@@ -8,7 +8,7 @@ SOURCE=server.cpp server_main.cpp
 all: $(TARGET)
 	
 $(TARGET):
-	$(toolchain) $(SOURCE) -o $(bin_destination_path)/$(TARGET)
+	$(toolchain) $(SOURCE) -o $(bin_destination_path)/$(TARGET) -lpthread
 
 	@echo
 	@echo Server Build sucessfully!

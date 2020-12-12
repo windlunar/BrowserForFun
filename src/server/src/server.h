@@ -36,7 +36,7 @@
  */ 
 class SERVER{
 	public:
-		SERVER(int portNum);
+		SERVER(int portNum ,std::string html_path);
 		~SERVER();
 
 		int ServerPortNum ;
@@ -60,6 +60,8 @@ class SERVER{
 		std::string openHtmlFile(std::string htmlPath) ;
 		int writeStrData(int server_fd ,int client_fd ,std::string data) ;
 		int sendHtmlFile(int server_fd ,int client_fd ,std::string htmlPath);
+
+		std::string html_file_path ;
 
 };
 
