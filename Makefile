@@ -21,6 +21,7 @@ copy :
 .PHONY : clean
 clean :
 	-rm $(bin_destination_path)/*
+	-rm ./src/server/Server
 	
 
 
