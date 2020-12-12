@@ -23,7 +23,12 @@ CLIENT::CLIENT(int portNum){
 	this->clientSocketfd = -1 ;
 
 	this->clientSocketfd = this->createSocket() ;
-	this->SocketConnect(this->clientSocketfd ,&this->serverSocAddr) ;
+
+	if(this->SocketConnect(this->clientSocketfd ,&this->serverSocAddr) < 0)
+	{
+		exit(-1) ;
+	} 
+	
 	this->socketWriteTest();
 	//this->socketReadTest();
 }
