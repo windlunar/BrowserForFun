@@ -1,44 +1,27 @@
 
-toolchain=g++
-bin_destination_path =./build
-TARGET=browser
-LINK=-lsfml-graphics -lsfml-window -lsfml-system
-SOURCE=parse.cpp loadfile.cpp layout.cpp 
 
+bin_destination_path=./build
+
+
+#Build
 .PHONY : all
-all: $(TARGET)
-	
-$(TARGET):
+all:
 	mkdir -p build
-	$(toolchain) browser.cpp $(SOURCE) -o $(bin_destination_path)/$(TARGET) $(LINK)
+	make -C ./src
 
 	@echo
 	@echo Build sucessfully!
 
 
+.PHONY : copy
+copy :
+	cp ./src/server/Server $(bin_destination_path)/
+
 #Clean objects and bin
 .PHONY : clean
 clean :
-	-rm $(bin_destination_path)/$(TARGET)
+	-rm $(bin_destination_path)/*
 	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
