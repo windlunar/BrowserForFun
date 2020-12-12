@@ -192,8 +192,8 @@ std::string SERVER::openHtmlFile(std::string htmlPath){
 
 int SERVER::writeStrData(int server_fd ,int client_fd ,std::string data){
 	/* 寫資料到client端 */
-	std::cout << "Send data to client : " << data << std::endl ;
-	std::cout << "Size of data : " << data.size() << std::endl ;
+	//std::cout << "Send data to client : " << data << std::endl ;
+	//std::cout << "Size of data : " << data.size() << std::endl ;
 
 	int rtn = write(client_fd ,data.c_str() ,data.size()) ;
 

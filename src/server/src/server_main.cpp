@@ -38,11 +38,12 @@ int main(int argc, char *argv[]) {
         file_path = argv[1] ;
     }
 
-	
+	cout << "Run Server..." << endl ;
 	SERVER server(SERVER_PORT_NUM ,file_path) ;
 	pthread_t thread;
 
 	while(1){
+		
 		server.clientfd = server.socketAccept(server.serverfd ,&server.clientSocAddr) ;
 		int client_fd = server.clientfd ;
 
@@ -54,6 +55,7 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+	close(server.clientfd) ;
 
 
 
