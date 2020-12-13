@@ -27,7 +27,7 @@ class PARSE{
 
         std::string getTagName(std::string strVec);
         int getNodeType(std::string tag_name_input);
-        std::string getTextDate(std::string strVec);
+        std::string getTextData(std::string strVec);
         void createDomTree() ;
 
         void printTreeForTest() ;

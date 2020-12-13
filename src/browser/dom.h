@@ -24,6 +24,7 @@
 #define p_TAGNAME       "p" 
 #define h1_TAGNAME      "h1" 
 #define title_TAGNAME   "title"
+#define img_TAGNAME     "img"
 
 
 #define ROOT_ELEMENT_NODE_TYPE    0

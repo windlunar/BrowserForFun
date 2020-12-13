@@ -85,13 +85,19 @@ int PARSE::createChildNode(int note_type ,std::string tagnameInput ,std::string 
         << std::endl;
 
 
-    //存放該 node的文字內容(如果是 text node的話)
+    //存放該 node的文字內容(如果是 text node的話)   
     if(tree.node[tree.notUsedNodeIndex].noteType != text){
         tree.node[tree.notUsedNodeIndex].textData = "NONE" ;
 
     }else{
         tree.node[tree.notUsedNodeIndex].textData = text_str ; 
     }
+
+    //如果tag是img的話 ,也把src的內容存入 text_str
+    if(tree.node[tree.notUsedNodeIndex].tagName == img_TAGNAME){
+        tree.node[tree.notUsedNodeIndex].textData = text_str ; 
+    }
+
     std::cout 
         << "text data :" 
         << tree.node[tree.notUsedNodeIndex].textData 
@@ -134,8 +140,14 @@ std::string PARSE::getTagName(std::string strVec)
         std::cout << "Closing tag" << std::endl;
         tag = "NA" ;
     }else{
-        tag = strVec.substr(strVec.find_first_of("<") + 1
-                                ,(strVec.find_first_of(">") - strVec.find_first_of("<"))-1) ;
+        int k = 0 ;
+        for(k ; k < strVec.size() ; k++){
+            if(strVec[k] == ' ' || strVec[k] == '>'){
+                break ;
+            }
+        }
+        
+        tag = strVec.substr(strVec.find_first_of("<") + 1 ,k-1) ;    
     }
     return tag ;
 }
@@ -153,15 +165,29 @@ int PARSE::getNodeType(std::string strVec)
 
 
 
-std::string PARSE::getTextDate(std::string strVec)
+std::string PARSE::getTextData(std::string strVec)
 {
     std::string text_str ;
 
     if(getTagName(strVec) == title_TAGNAME || getTagName(strVec) == p_TAGNAME){
         text_str = strVec.substr(strVec.find(">") + 1
                                 ,(strVec.find("</") - strVec.find(">"))-1) ;
+
+    /** img標籤中的 src是屬性 ,src存放圖片的url, 這邊將其當成 text data*/
+    }else if(getTagName(strVec) == img_TAGNAME){
+
+        int k = strVec.find("=")+1 ;
+        for(k ; k < strVec.size() ; k++){
+            if(strVec[k] == '>'){
+                break ;
+            }
+            text_str += strVec[k] ;
+        }
+
+        std::cout << "imgae data :" << text_str << std::endl ;
+
     }else{
-        std::cout << "In getTextDate(), Not text node." << std::endl ;
+        std::cout << "In getTextData(), Not text node." << std::endl ;
         text_str = "NONE" ;
     }
 
@@ -186,7 +212,7 @@ void PARSE::createDomTree()
 
             current_node_ptr = this->createChildReturnNodePtr(this->getNodeType(vectorHTML[k]) 
                                                             ,this->getTagName(vectorHTML[k]) 
-                                                            ,this->getTextDate(vectorHTML[k]) 
+                                                            ,this->getTextData(vectorHTML[k]) 
                                                             ,parent_node_ptr) ;
             
             
@@ -205,7 +231,7 @@ void PARSE::createDomTree()
 
             current_node_ptr = this->createChildReturnNodePtr(this->getNodeType(vectorHTML[k]) 
                                                             ,this->getTagName(vectorHTML[k]) 
-                                                            ,this->getTextDate(vectorHTML[k]) 
+                                                            ,this->getTextData(vectorHTML[k]) 
                                                             ,parent_node_ptr) ;
 
         }else{
@@ -219,63 +245,8 @@ void PARSE::createDomTree()
 
 
 void PARSE::printTreeForTest(){
-    std::cout << "\nPrint Tree :" << std::endl;
-    std::cout << "Size of Root's children :" << tree.node[ROOT].childrenNode.size() << std::endl ;
-    
-    std::cout 
-        << "Root node\n:" 
-        << tree.node[ROOT].tagName
-        << "," << tree.node[ROOT].noteType 
-        << "," << tree.node[ROOT].textData 
-        << std::endl;
-
-    std::cout 
-        << "   " 
-        << tree.node[ROOT].childrenNode[0]->tagName
-        << "," << tree.node[ROOT].childrenNode[0]->noteType 
-        << "," << tree.node[ROOT].childrenNode[0]->textData
-        << std::endl ;
-        
-
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[0]->childrenNode[0]->noteType
-        << "," << tree.node[ROOT].childrenNode[0]->childrenNode[0]->textData 
-        << std::endl ;
-
-
-    std::cout 
-        << "   " << tree.node[ROOT].childrenNode[1]->tagName
-        << "," << tree.node[ROOT].childrenNode[1]->noteType 
-        << "," << tree.node[ROOT].childrenNode[1]->textData
-        << std::endl ;
-
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[0]->noteType 
-        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[0]->textData
-        << std::endl ;
-
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[1]->noteType 
-        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[1]->textData
-        << std::endl ;
-
-    std::cout 
-        << "       " 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[2]->tagName
-        << "," 
-        << tree.node[ROOT].childrenNode[1]->childrenNode[2]->noteType 
-        << "," << tree.node[ROOT].childrenNode[1]->childrenNode[2]->textData
-        << std::endl ;
+    std::cout << "Not Implement Yet." << std::endl ;
 }
+
+
+

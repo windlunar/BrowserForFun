@@ -82,15 +82,12 @@ std::vector<std::string>
 
 
 
-
-
-//LOADFILE::openFile(){
-//
-//}
-
-//LOADFILE::closeFile(){
-//    
-//}
-
+void LOADFILE::printHtmlRawData(std::vector<std::string> readHTML){
+    std::cout << "readHTML.size() :" << readHTML.size() << std::endl;
+    for(int i = 0 ; i<readHTML.size(); i++){
+        std::cout << "readHTML[" << i << "] :" << readHTML[i] << std::endl;
+    }
+    std::cout << "\n"<< std::endl ;
+}
 
 

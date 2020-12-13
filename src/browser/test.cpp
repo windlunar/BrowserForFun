@@ -57,10 +57,7 @@ int main(int argc ,char *argv[])
     LAYOUT layout ;
 
     /** Render*/
-    sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), layout.getTitle_of_Window());
-    
-    //背景顏色
-    sf::Color color(240, 240, 255);
+    sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), "test");
 
     while (window.isOpen())
     {
@@ -71,7 +68,7 @@ int main(int argc ,char *argv[])
                 window.close();
         }
 
-        window.clear(color);
+        window.clear(sf::Color::White);
         
         //render texts.
         layout.renderText(&window) ;

@@ -25,6 +25,8 @@ class LOADFILE
         std::string path ;
         std::string fileName ;
         std::string filePath ;
+
+        void printHtmlRawData(std::vector<std::string> readHTML);
 };
 
 
