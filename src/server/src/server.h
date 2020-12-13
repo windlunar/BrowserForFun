@@ -63,6 +63,13 @@ class SERVER{
 
 		std::string html_file_path ;
 
+
+		//Send image
+		char imgBuf[BUF_SIZE] ;
+		int openImgFile(std::string file_name) ;
+		int writeImgData(int server_fd ,int client_fd ,int Size);
+		int sendImgFile(int server_fd ,int client_fd ,std::string file_name) ;
+
 };
 
 

@@ -22,7 +22,14 @@ using namespace std;
 int main(int argc, char *argv[]) {
 	CLIENT client(SERVER_PORT_NUM) ;
 	string str ;
+	client.socketWriteTest();
 	client.receiveHtmlFile(client.clientSocketfd ,READ_BUF_SIZE ,str ,CLIENT_FILE_PATH) ;
+
+	client.socketWriteTest();
+	client.receiveImageFile(client.clientSocketfd ,"./temp/earth.jpg") ;
+
+	client.socketWriteTest();
+	client.receiveImageFile(client.clientSocketfd ,"./temp/solar.jpg") ;
 
 	//open browser
 	int rtn = fork();

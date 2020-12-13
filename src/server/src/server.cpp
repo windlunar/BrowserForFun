@@ -211,6 +211,41 @@ int SERVER::sendHtmlFile(int server_fd ,int client_fd ,std::string htmlPath){
 
 
 
+int SERVER::openImgFile(std::string file_name){
+    std::fstream fs;
+    fs.open(file_name.c_str(), std::fstream::binary | std::fstream::in);
+
+    memset(this->imgBuf, 0, BUF_SIZE);
+    fs.read(this->imgBuf, BUF_SIZE);
+
+    std::cout << " read size:" << fs.gcount() << std::endl;
+	return fs.gcount() ;
+}
+
+
+int SERVER::writeImgData(int server_fd ,int client_fd ,int size){
+	/* 寫資料到client端 */
+	std::cout << "Send img to client" << std::endl ;
+	std::cout << "Size :" << size << std::endl ;
+
+	int rtn = write(client_fd ,&this->imgBuf ,size) ;
+
+	if(rtn < 0){
+		perror("Error,can't write data to client.") ;
+		close(server_fd) ;
+		return -1 ;
+	}
+	return 0 ;
+}
+
+
+int SERVER::sendImgFile(int server_fd ,int client_fd ,std::string file_name){
+	int size = this->openImgFile(file_name) ;
+	return this->writeImgData(server_fd ,client_fd ,size) ;
+}
+
+
+
 
 
 

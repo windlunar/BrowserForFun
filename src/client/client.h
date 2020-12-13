@@ -39,7 +39,10 @@ class CLIENT{
 		void writeStrToFile(std::string data ,std::string path) ;
 		void receiveHtmlFile(int client_fd ,int readBufSize ,std::string data ,std::string path);
 
-
+		//image related
+		char imgBuf[BUF_SIZE] ;
+		int readImgData(int client_fd);
+		void receiveImageFile(int client_fd ,std::string output_path);
 };
 
 

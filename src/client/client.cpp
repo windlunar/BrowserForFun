@@ -205,3 +205,24 @@ void CLIENT::receiveHtmlFile(int client_fd ,int readBufSize ,std::string data ,s
 	this->writeStrToFile(this->readStrData(client_fd ,readBufSize) ,path) ; 
 
 }
+
+
+int CLIENT::readImgData(int client_fd){
+
+	memset(this->imgBuf, 0, BUF_SIZE);
+	int rtn = read(client_fd ,this->imgBuf ,BUF_SIZE) ;
+
+	if(rtn < 0){
+		perror("Error,can't read data from Server.") ;
+		close(client_fd) ;
+		return -1 ;
+	}
+	return 0 ;
+}
+
+void CLIENT::receiveImageFile(int client_fd ,std::string output_path){
+	this->readImgData(client_fd) ;
+    std::fstream fs ;
+    fs.open(output_path.c_str() ,std::fstream::binary | std::fstream::out) ;
+    fs.write(this->imgBuf ,BUF_SIZE) ;
+}

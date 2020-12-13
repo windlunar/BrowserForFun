@@ -22,8 +22,13 @@ void *request_handler(void *arg){
 	SERVER *server = (SERVER *)arg ;
 
 	server->socketReadTest(server->serverfd ,server->clientfd) ;
-
 	server->sendHtmlFile(server->serverfd ,server->clientfd ,server->html_file_path) ;
+
+	server->socketReadTest(server->serverfd ,server->clientfd) ;
+	server->sendImgFile(server->serverfd ,server->clientfd ,"./earth.jpg") ;
+
+	server->socketReadTest(server->serverfd ,server->clientfd) ;
+	server->sendImgFile(server->serverfd ,server->clientfd ,"./solar.jpg") ;
 }
 
 
