@@ -16,6 +16,7 @@
 
 
 #include <stdio.h>
+#include <unistd.h>
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -36,11 +37,10 @@
 
 class LAYOUT{
     public:
-        LAYOUT() ;
+        LAYOUT(std::string font_path) ;
         ~LAYOUT() ;
 
         sf::Font font;
-        sf::Text textForRender ;
 
         std::string getTitle_of_Window();
         void setTextFmt(sf::Text *text ,std::string textData ,int charSize);
@@ -64,7 +64,8 @@ class LAYOUT{
 
         std::vector<sf::Sprite> image_vec ;
         sf::Texture texture_arr[16] ;
-        //sf::Sprite sprite_arr[16] ;
+        sf::Sprite sprite_arr[16] ;
+        int img_num ;
 
         void loadImage(sf::Texture *texture_ptr ,sf::Sprite *sprite_ptr ,std::string image_path) ;
         void renderImage(sf::RenderWindow *window) ;

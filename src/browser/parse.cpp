@@ -249,4 +249,13 @@ void PARSE::printTreeForTest(){
 }
 
 
-
+void PARSE::getImgTagsFilePath(){
+    std::string temp ;
+    for(int k = 0 ; k<tree.nodeNum ; k++){
+        if(tree.node[k].tagName == img_TAGNAME){
+            temp = tree.node[k].textData ;
+            temp += '\0' ;
+            imgFilePathVec.push_back(temp) ;
+        }
+    }
+}

@@ -97,7 +97,7 @@ int req_handler(SERVER *server){
 			if(readData[i] == '\0') break ;
 			path += readData[i] ;
 		}
-		cout << "path :" << path << endl ;	
+		//cout << "path :" << path << endl ;	
 
 		if(path[1] == '.'){
 			perror("Can't access parent directory.") ;
@@ -106,13 +106,13 @@ int req_handler(SERVER *server){
 
 		//傳送檔案給 client
 		if(path.find("html") != string::npos){
-			cout << "Send html file to client." << endl ;
 			server->sendHtmlFile(server->serverfd ,server->clientfd ,path) ;
+			cout << "Send html file to client." << endl ;
 
 		}else if(path.find("jpg") != string::npos){
-			cout << "Send html file to client." << endl ;
 			server->sendImgFile(server->serverfd ,server->clientfd ,path) ;
-		
+			cout << "Send html file to client." << endl ;
+			
 		}else{
 			cout << "Not implement Yet!" << endl ;
 		}

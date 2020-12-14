@@ -34,6 +34,10 @@ class PARSE{
 
         std::string docType ;
         std::vector<std::string> vectorHTML ;
+
+
+        std::vector<std::string> imgFilePathVec ;
+        void getImgTagsFilePath() ;
 };
 
 

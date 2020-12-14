@@ -10,8 +10,8 @@
 
 
 
-LAYOUT::LAYOUT(){
-    if (!font.loadFromFile(FONT_PATH)){
+LAYOUT::LAYOUT(std::string font_path){
+    if (!font.loadFromFile(font_path)){
         std::cout << "Can't load font file." << std::endl ;
     }
 
@@ -106,7 +106,7 @@ void LAYOUT::setLayout(){
             image_path_vec.push_back(tree.node[k].textData) ;
 
             //load圖片
-            std::cout << "image path :" << tree.node[k].textData << std::endl ;
+            std::cout << "in setLayout() ,image path :" << tree.node[k].textData << std::endl ;
             sf::Sprite sprite ;
 
             this->loadImage(&texture_arr[img_num] ,&sprite ,tree.node[k].textData) ;
@@ -124,7 +124,7 @@ void LAYOUT::setLayout(){
             //load image後 存到sprite的 vector中
             image_vec.push_back(sprite) ;
 
-            // y大約有440的間隔
+            // y大約有300的間隔
             text_y_pos += 300 ;
             img_num += 1 ;
         }

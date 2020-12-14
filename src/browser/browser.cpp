@@ -57,7 +57,7 @@ int main(int argc ,char *argv[])
     parse.createDomTree();
 
     /** 根據tree排版*/
-    LAYOUT layout ;
+    LAYOUT layout(FONT_PATH) ;
 
     /** Render*/
     sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), layout.getTitle_of_Window());

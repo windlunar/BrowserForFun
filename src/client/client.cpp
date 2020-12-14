@@ -17,6 +17,8 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
+#include <ctime>
+
 
 #include "client.h"
 
@@ -236,7 +238,7 @@ int CLIENT::readData(int client_fd ,unsigned char *buf){
  */ 
 void CLIENT::receiveImageFile(int client_fd ,std::string output_path){
 	//workaround
-	usleep(10000) ;
+	usleep(100000) ;
 
 	unsigned char *buf = new unsigned char[BUF_SIZE] ;
 	memset(buf, 0, BUF_SIZE);

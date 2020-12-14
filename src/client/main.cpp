@@ -40,6 +40,8 @@ struct ClientReq{
 
 void *downloadImageThread(void *arg){
 	ClientReq *clientReq = (ClientReq *)arg ;
+	string filename = clientReq->img_name ;
+	filename += "\n" ;
 
 	string req = "GET " ;
 	req += clientReq->img_name ;
@@ -50,6 +52,14 @@ void *downloadImageThread(void *arg){
 	clientReq->client_ptr->sendRequest(req.c_str());
 	clientReq->client_ptr->receiveImageFile(clientReq->client_ptr->clientSocketfd ,clientReq->img_name) ;
 	clientReq->client_ptr->sendRequest("DONE\0\r\n");
+
+	fstream fs("./record.txt" ,fstream::out | fstream::app) ;
+	if(fs.is_open()){
+		cout << "Write file name to txt." << endl ;
+		fs.write(filename.c_str() ,filename.size()) ;
+	}else{
+		perror("In downloadImageThread.Fail to open file") ;
+	}
 }
 
 
@@ -61,7 +71,7 @@ void *downloadImageThread(void *arg){
  */ 
 int main(int argc, char *argv[]) {
 
-
+	/** 根據輸入參數設定 server ip, port*/
 	const char *server_ip ;
 	int server_port ;
     if( argc != 3 ){
@@ -80,7 +90,7 @@ int main(int argc, char *argv[]) {
     cout << "ip :" << server_ip << endl ;
     cout << "port :" << server_port << endl ;
 
-
+	/** 根據輸入參數設定下載路徑*/
     string file_path ;
     if( argc != 2 ){
         cout << "Default file path :" << DEFAULT_FILE_PATH << endl ;
@@ -90,10 +100,11 @@ int main(int argc, char *argv[]) {
         file_path = argv[3] ;
     }
     
-    //變更當前程式的執行路徑
+    //變更當前程式的執行路徑至下載路徑
     chdir(file_path.c_str()) ;
 
 
+	//下載 html檔案
 	CLIENT *client = new CLIENT(server_ip ,server_port) ;
 	client->sendRequest("GET ./index.html\0\r\n");
 	client->receiveHtmlFile(client->clientSocketfd ,READ_BUF_SIZE ,"./index.html") ;
@@ -115,6 +126,9 @@ int main(int argc, char *argv[]) {
 
     parse.createDomTree();
 
+	//Get the img file name from dom tree
+	parse.getImgTagsFilePath() ;
+
 
 	/** Create a child process to get image which parse from html file.*/
 	int pipe_fd[2] ;
@@ -128,57 +142,86 @@ int main(int argc, char *argv[]) {
 		perror("Fail to fork a process to open browser\n") ;
 		exit(0);
 
-	//child process to get image from server.
+
+	/** 
+	 * 
+	 * child process to get image from server.
+	 * 
+	 */ 
 	}else if(rtn == 0){
 		//close write
 		close(pipe_fd[1]) ;
 
 		cout << "	To get image from server ,child pid :" << getpid() << endl ;
 
-		CLIENT client1(server_ip ,server_port) ;
-		ClientReq clientReq1 ;
-		clientReq1.client_ptr = &client1 ;
+		int img_num = 0 ;
+		read(pipe_fd[0] , &img_num, sizeof(int)) ;
+		cout << "num of img :" << img_num << endl ;
 
-		CLIENT client2(server_ip ,server_port) ;
-		ClientReq clientReq2 ;
-		clientReq2.client_ptr = &client2 ;
 
-		memset((void *)&clientReq1.img_name ,0 ,sizeof(clientReq1.img_name)) ;
-		memset((void *)&clientReq2.img_name ,0 ,sizeof(clientReq2.img_name)) ;
+		//CLIENT client(server_ip ,server_port) ;
+		CLIENT *client[img_num] ;
+		for(int j=0 ;j < img_num ;j++){
+
+			client[j] = new CLIENT(server_ip ,server_port) ;
+
+		}
+
+		ClientReq clientReq[img_num] ;
 		
+		for(int j=0 ;j < img_num ;j++){
+
+			clientReq[j].client_ptr = client[j] ;
+			memset((void *)&clientReq[j].img_name ,0 ,sizeof(clientReq[j].img_name)) ;
+
+		}
 
 		/** Get the image file name from parent process.*/
-		read(pipe_fd[0] , clientReq1.img_name, 32) ;
-		read(pipe_fd[0] , clientReq2.img_name, 32) ;
-
-		printf("Get First image name : %s\n" ,clientReq1.img_name) ;
-		printf("Get Second image name : %s\n" ,clientReq2.img_name) ;
-
-
-		/** Create 2 thread to get image file from server.*/
-		pthread_t thread1;
-		pthread_t thread2;
-		if(pthread_create(&thread1 ,NULL ,&downloadImageThread ,&clientReq1) != 0 ){
-			perror("Create Thread Error!\n");
+		for(int j=0 ;j < img_num ;j++){
+			read(pipe_fd[0] , clientReq[j].img_name, 32) ;
 		}
 
-		if(pthread_create(&thread2 ,NULL ,&downloadImageThread ,&clientReq2) != 0 ){
-			perror("Create Thread Error!\n");
+		printf("Get First image name : %s\n" ,clientReq[0].img_name) ;
+		printf("Get Second image name : %s\n" ,clientReq[1].img_name) ;
+
+
+		/** Create threads to get image file from server.*/
+		pthread_t thread[img_num];
+		for(int j=0 ;j < img_num ;j++){
+			if(pthread_create(&thread[j] ,NULL ,&downloadImageThread ,&clientReq[j]) != 0 ){
+				perror("Create Thread Error!\n");
+			}		
 		}
 
-		pthread_join(thread1, NULL); 
-		pthread_join(thread2, NULL); 
 
+		for(int j=0 ;j < img_num ;j++){
+			pthread_join(thread[j], NULL); 
+		}
 
 		close(pipe_fd[0]) ;
+
+		for(int j=0 ;j < img_num ;j++){
+
+			delete client[j]  ;
+
+		}
+		
 		exit(0) ;
 	}
+
 
 	//close read
 	close(pipe_fd[0]) ;
 
-	write(pipe_fd[1] , "./earth.jpg\0",32) ;
-	write(pipe_fd[1] , "./solar.jpg\0",32) ;
+	int img_num = parse.imgFilePathVec.size() ;
+	write(pipe_fd[1] , &img_num,sizeof(int)) ;
+
+	//send the img file name to child process.
+	for(int j=0 ;j < parse.imgFilePathVec.size() ;j++){
+		write(pipe_fd[1] , parse.imgFilePathVec[j].c_str(),32) ;
+		usleep(100) ;
+	}
+	
 	close(pipe_fd[1]) ;
 
 
@@ -187,7 +230,7 @@ int main(int argc, char *argv[]) {
 	cout << "Continue to layout and render the text and image." << endl ;
 
     /** 根據tree排版*/
-    LAYOUT layout ;
+    LAYOUT layout(FONT_PATH) ;
 
     /** 建立視窗*/
     sf::RenderWindow window(sf::VideoMode(WIN_WIDTH, WIN_HEIGHT), layout.getTitle_of_Window());
@@ -212,7 +255,7 @@ int main(int argc, char *argv[]) {
 
         //render image
         layout.renderImage(&window) ;
-        
+
         window.display();
     }
 	return 0 ;
