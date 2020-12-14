@@ -1,4 +1,8 @@
-
+/**
+ * Date : 2020/12/15
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
 
 #include <iostream>
 #include <cstdlib>
@@ -30,8 +34,6 @@ CLIENT::CLIENT(const char *server_ip_num ,int portNum){
 		exit(-1) ;
 	} 
 	
-	this->socketWriteTest();
-	//this->socketReadTest();
 }
 
 CLIENT::~CLIENT(){
@@ -55,7 +57,7 @@ int CLIENT::createSocket(){
 	 * 		通常設為0
 	 * return : int資料型態, 為socket的檔案描述符號
 	 */
-	int client_socket_fd = socket(AF_INET ,SOCK_STREAM, 0) ;
+	int client_socket_fd = socket(AF_INET ,SOCK_STREAM , 0) ;
 
 	/**
 	 * unsigned long int inet_addr(const char *cp);
@@ -123,9 +125,9 @@ int CLIENT::SocketConnect(int client_socket_fd ,struct sockaddr_in *server_Soc_A
 
 
 
-int CLIENT::socketWriteTest(){
+int CLIENT::sendRequest(const char *data){
 	/* 寫資料到Server端 */
-	const char *writeBuf = "Hi,I'm client." ;
+	const char *writeBuf = data ;
 	std::cout << "Send data to Server : " << writeBuf << std::endl ;
 
 	int writeRTN = write(clientSocketfd ,writeBuf ,strlen(writeBuf)) ;
@@ -138,6 +140,8 @@ int CLIENT::socketWriteTest(){
 	}
 	return 0 ;
 }
+
+
 
 
 int CLIENT::socketReadTest(){
@@ -206,17 +210,17 @@ void CLIENT::writeStrToFile(std::string data ,std::string path){
 }
 
 
-void CLIENT::receiveHtmlFile(int client_fd ,int readBufSize ,std::string data ,std::string path)
+void CLIENT::receiveHtmlFile(int client_fd ,int readBufSize ,std::string path)
 {
 	this->writeStrToFile(this->readStrData(client_fd ,readBufSize) ,path) ; 
 
 }
 
 
-int CLIENT::readImgData(int client_fd){
+int CLIENT::readData(int client_fd ,unsigned char *buf){
 
-	memset(this->imgBuf, 0, BUF_SIZE);
-	int rtn = read(client_fd ,this->imgBuf ,BUF_SIZE) ;
+	//memset(buf, 0, size);
+	int rtn = read(client_fd ,buf ,BUF_SIZE) ;
 
 	if(rtn < 0){
 		perror("Error,can't read data from Server.") ;
@@ -226,9 +230,21 @@ int CLIENT::readImgData(int client_fd){
 	return 0 ;
 }
 
+/**
+ * jpg image 第一跟第二個byte須為 : 0xffd8
+ * jpg image 最後兩個byte須為 : 0xffd9
+ */ 
 void CLIENT::receiveImageFile(int client_fd ,std::string output_path){
-	this->readImgData(client_fd) ;
+	//workaround
+	usleep(10000) ;
+
+	unsigned char *buf = new unsigned char[BUF_SIZE] ;
+	memset(buf, 0, BUF_SIZE);
+
+	this->readData(client_fd ,buf) ;
+
     std::fstream fs ;
     fs.open(output_path.c_str() ,std::fstream::binary | std::fstream::out) ;
-    fs.write(this->imgBuf ,BUF_SIZE) ;
+    fs.write((const char *)buf ,BUF_SIZE) ;
+	delete buf ;
 }

@@ -1,3 +1,9 @@
+/**
+ * Date : 2020/12/15
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
+
 #ifndef _CLIENT_H_
 #define _CLIENT_H_
 
@@ -32,17 +38,17 @@ class CLIENT{
 		~CLIENT() ;
 		int createSocket() ;
 		int SocketConnect(int client_socket_fd ,struct sockaddr_in *server_Soc_Addr) ;
-		int socketWriteTest() ;
+		int sendRequest(const char *data);
 		int socketReadTest() ;
 
 
 		std::string readStrData(int client_fd ,int readBufSize) ;
 		void writeStrToFile(std::string data ,std::string path) ;
-		void receiveHtmlFile(int client_fd ,int readBufSize ,std::string data ,std::string path);
+		void receiveHtmlFile(int client_fd ,int readBufSize ,std::string path);
 
 		//image related
 		char imgBuf[BUF_SIZE] ;
-		int readImgData(int client_fd);
+		int readData(int client_fd ,unsigned char *buf);
 		void receiveImageFile(int client_fd ,std::string output_path);
 };
 
