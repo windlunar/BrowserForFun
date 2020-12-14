@@ -1,3 +1,8 @@
+/**
+ * Date : 2020/12/15
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
 
 #include "server.h"
 
@@ -138,17 +143,20 @@ int SERVER::socketAccept(int server_fd ,struct sockaddr_in *client_Soc_Addr ){
 	return client_fd ;
 }
 
-int SERVER::socketReadTest(int server_fd ,int client_fd){
+int SERVER::getRequest(int server_fd ,int client_fd ,const char *readData){
 	/* 從client端接收資料 */	
-	char readBuf[16] = {0} ;
-	int readRTN = read(client_fd ,readBuf ,sizeof(readBuf)) ;
+	int readRTN = read(client_fd ,(void *)readData ,32) ;
 	if(readRTN < 0){
 		perror("Error,can't read data from client.") ;
 		close(server_fd) ;		
 		return -1 ;
 	}
-	std::cout << "Read from client : " << readBuf << std::endl ;
+	std::cout << "Read from client :" << readData << std::endl ;
+	return 0 ;
 }
+
+
+
 
 
 int SERVER::socketWriteTest(int server_fd ,int client_fd){

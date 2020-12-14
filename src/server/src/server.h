@@ -1,3 +1,9 @@
+/**
+ * Date : 2020/12/15
+ * Author : Yi-Ying-Lin
+ * 
+ */ 
+
 #ifndef _SERVER_H_
 #define _SERVER_H
 
@@ -54,7 +60,9 @@ class SERVER{
 		int socketBind(int socked_fd ,struct sockaddr_in *server_Soc_Addr) ;
 		void socketListen(int server_fd) ;
 		int socketAccept(int server_fd ,struct sockaddr_in *client_Soc_Addr ) ;
-		int socketReadTest(int server_fd ,int client_fd) ;
+
+		int getRequest(int server_fd ,int client_fd ,const char *readData);
+
 		int socketWriteTest(int server_fd ,int client_fd) ;
 
 
