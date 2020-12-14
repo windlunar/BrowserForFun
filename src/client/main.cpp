@@ -20,7 +20,25 @@
 using namespace std;
 
 int main(int argc, char *argv[]) {
-	CLIENT client(SERVER_PORT_NUM) ;
+	const char *server_ip ;
+	int server_port ;
+    if( argc != 3 ){
+        cout << "Default server ip :" << SERVER_IP << endl ;
+		server_ip = SERVER_IP ;
+        cout << "Default server port :" << SERVER_PORT_NUM << endl ;
+		server_port = SERVER_PORT_NUM ;
+
+    }else{
+        cout << "server ip:" << argv[1] << endl ;
+        server_ip = argv[1] ;
+		cout << "server port:" << argv[2] << endl ;
+		server_port = stoi(argv[2]) ;
+    }
+
+    cout << "ip :" << server_ip << endl ;
+    cout << "port :" << server_port << endl ;
+
+	CLIENT client(server_ip ,server_port) ;
 	string str ;
 	client.socketWriteTest();
 	client.receiveHtmlFile(client.clientSocketfd ,READ_BUF_SIZE ,str ,CLIENT_FILE_PATH) ;

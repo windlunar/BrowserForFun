@@ -36,10 +36,11 @@
  */ 
 class SERVER{
 	public:
-		SERVER(int portNum ,std::string html_path);
+		SERVER(const char *server_ip ,int portNum);
 		~SERVER();
 
 		int ServerPortNum ;
+		const char * server_ip_num ;
 
 		int serverfd ;
 		struct sockaddr_in serverSocAddr ;
@@ -61,7 +62,7 @@ class SERVER{
 		int writeStrData(int server_fd ,int client_fd ,std::string data) ;
 		int sendHtmlFile(int server_fd ,int client_fd ,std::string htmlPath);
 
-		std::string html_file_path ;
+
 
 
 		//Send image

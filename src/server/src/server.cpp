@@ -20,8 +20,8 @@
 
 
 
-SERVER::SERVER(int portNum ,std::string html_path){
-	this->html_file_path = html_path ;
+SERVER::SERVER(const char *server_ip ,int portNum){
+	this->server_ip_num = server_ip ;
 	this->serverfd = -1 ;
 	this->clientfd = -1 ;
 	this->ServerPortNum = portNum ;
@@ -61,7 +61,7 @@ int SERVER::socketCreate(){
 	 * arg : const char *cp :為一般 ip格式
 	 * return : 將一般在使用的ip格式轉換為 網路使用的binary格式, 失敗則回傳-1
 	 */ 
-	if(this->server_IP_Addr = inet_addr(SERVER_IP) == -1){
+	if(this->server_IP_Addr = inet_addr(server_ip_num) == -1){
 		perror("Setting IP error!") ;
 		close(socketfd) ;
 		return -1 ;

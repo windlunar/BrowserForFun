@@ -18,7 +18,8 @@
 
 
 
-CLIENT::CLIENT(int portNum){
+CLIENT::CLIENT(const char *server_ip_num ,int portNum){
+	this->server_ip = server_ip_num ;
 	this->serverPortNum = portNum ;
 	this->clientSocketfd = -1 ;
 
@@ -62,10 +63,12 @@ int CLIENT::createSocket(){
 	 * arg : const char *cp :為一般 ip格式
 	 * return : 將一般在使用的ip格式轉換為 網路使用的binary格式, 失敗則回傳-1
 	 */ 
-	if(this->server_IP_Addr = inet_addr(SERVER_IP) == -1 ){
+	if(this->server_IP_Addr = inet_addr(server_ip) == -1 ){
 		perror("Setting Server IP error!") ;
 		close(client_socket_fd) ;
+		exit(0) ;
 		return -1 ;
+		
 	}
 
 
@@ -91,7 +94,7 @@ int CLIENT::createSocket(){
 	 * uint16_t htons(uint16_t hostshort) : 將ipv4的port number轉換為網路形式
 	 */ 	
 	this->serverSocAddr.sin_family = AF_INET ;
-	this->serverSocAddr.sin_port = htons(SERVER_PORT_NUM) ;
+	this->serverSocAddr.sin_port = htons(serverPortNum) ;
 	this->serverSocAddr.sin_addr.s_addr = server_IP_Addr ;
 
 	return client_socket_fd ;
@@ -112,6 +115,7 @@ int CLIENT::SocketConnect(int client_socket_fd ,struct sockaddr_in *server_Soc_A
 	if(connectRTN != 0){
 		perror("Connect to server error!") ;
 		close(client_socket_fd) ;
+		exit(0) ;
 		return -1 ;
 	}
 	return 0 ;
@@ -128,8 +132,9 @@ int CLIENT::socketWriteTest(){
 
 	if(writeRTN < 0){
 		perror("Error,can't write data to Server.") ;
-		return -1 ;
+		
 		close(clientSocketfd) ;
+		return -1 ;
 	}
 	return 0 ;
 }
@@ -143,8 +148,9 @@ int CLIENT::socketReadTest(){
 
 	if(readRTN < 0){
 		perror("Error,can't read data from Server.") ;
-		return -1 ;
+		
 		close(clientSocketfd) ;
+		return -1 ;
 	}
 
 	std::cout << "Read from Server : " << clientReadBuf << std::endl ;

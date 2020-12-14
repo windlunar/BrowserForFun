@@ -10,6 +10,7 @@
 #include <fstream>
 #include <algorithm>
 #include <vector>
+#include <unistd.h>
 
 #include "loadfile.h"
 #include "parse.h"
@@ -24,7 +25,7 @@ using namespace std;
 
 
 #define DEFAULT_FILE_PATH   "./html_test"
-#define FILE_NAME   "/index.html"
+#define FILE_NAME   "index.html"
 
 
 int main(int argc ,char *argv[])
@@ -37,10 +38,12 @@ int main(int argc ,char *argv[])
         cout << "File path :" << argv[1] << endl ;
         file_path = argv[1] ;
     }
-
+    
+    //變更當前程式的執行路徑
+    chdir(file_path.c_str()) ;
     
     /** 載入 HTML 檔案*/
-    LOADFILE load(file_path ,FILE_NAME) ;
+    LOADFILE load("./" ,FILE_NAME) ;
     vector<string> readHTML = load.deleteSpaceChar( load.loadFile() ) ;
     load.printHtmlRawData(readHTML) ;
 

@@ -22,7 +22,7 @@ void *request_handler(void *arg){
 	SERVER *server = (SERVER *)arg ;
 
 	server->socketReadTest(server->serverfd ,server->clientfd) ;
-	server->sendHtmlFile(server->serverfd ,server->clientfd ,server->html_file_path) ;
+	server->sendHtmlFile(server->serverfd ,server->clientfd ,"./index.html") ;
 
 	server->socketReadTest(server->serverfd ,server->clientfd) ;
 	server->sendImgFile(server->serverfd ,server->clientfd ,"./earth.jpg") ;
@@ -34,17 +34,26 @@ void *request_handler(void *arg){
 
 int main(int argc, char *argv[]) {
 
-	string file_path ;
-    if( argc != 2 ){
-        cout << "Default file path :" << SERVER_HTML_FILE_PATH << endl ;
-        file_path = SERVER_HTML_FILE_PATH ;
+	const char *server_ip ;
+	int server_port ;
+    if( argc != 3 ){
+        cout << "Default ip :" << SERVER_IP << endl ;
+		server_ip = SERVER_IP ;
+        cout << "Default port :" << SERVER_PORT_NUM << endl ;
+		server_port = SERVER_PORT_NUM ;
+
     }else{
-        cout << "File path :" << argv[1] << endl ;
-        file_path = argv[1] ;
+        cout << "server ip:" << argv[1] << endl ;
+        server_ip = argv[1] ;
+		cout << "server port:" << argv[2] << endl ;
+		server_port = stoi(argv[2]) ;
     }
 
+    cout << "ip :" << server_ip << endl ;
+    cout << "port :" << server_port << endl ;
+
 	cout << "Run Server..." << endl ;
-	SERVER server(SERVER_PORT_NUM ,file_path) ;
+	SERVER server(server_ip, server_port) ;
 	pthread_t thread;
 
 	while(1){

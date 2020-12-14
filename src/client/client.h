@@ -21,13 +21,14 @@
 class CLIENT{
 	public:
 		int serverPortNum ;
+		const char *server_ip ;
 
 		int clientSocketfd ;
 
 		struct sockaddr_in serverSocAddr ;
 		in_addr_t server_IP_Addr ;
 
-		CLIENT(int portNum) ;
+		CLIENT(const char *server_ip_num ,int portNum) ;
 		~CLIENT() ;
 		int createSocket() ;
 		int SocketConnect(int client_socket_fd ,struct sockaddr_in *server_Soc_Addr) ;

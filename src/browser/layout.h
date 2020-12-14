@@ -31,7 +31,7 @@
 #define WIN_WIDTH   1024
 #define WIN_HEIGHT  960
 
-#define FONT_PATH   "./font/Ubuntu-M.ttf"
+#define FONT_PATH   "../font/Ubuntu-M.ttf"
 #define p_CHAR_SIZE 18
 
 class LAYOUT{

@@ -23,6 +23,11 @@ clean :
 	-rm $(bin_destination_path)/*
 	-rm ./src/server/Server
 	-rm ./temp/*
+
+#Clean objects and bin
+.PHONY : deltemp
+deltemp :
+	-rm ./temp/*
 	
 
 

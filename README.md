@@ -18,13 +18,14 @@ Open a simple html file in html_test folder:
 
 
 Simple server and client :
+
 It will use "127.0.0.1" for test.
 
 open server to provide html and image file to clients:
 
     ./src/server/Server
 
-And then open anathor terminal and go to BrowserForFun directory.:
+Then open anathor terminal and go to BrowserForFun directory.:
 
     ./build/main
 
