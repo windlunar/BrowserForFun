@@ -32,7 +32,6 @@ class CLIENT{
 		int clientSocketfd ;
 
 		struct sockaddr_in serverSocAddr ;
-		in_addr_t server_IP_Addr ;
 
 		CLIENT(const char *server_ip_num ,int portNum) ;
 		~CLIENT() ;

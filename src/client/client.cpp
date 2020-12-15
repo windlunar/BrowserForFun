@@ -61,21 +61,6 @@ int CLIENT::createSocket(){
 	 */
 	int client_socket_fd = socket(AF_INET ,SOCK_STREAM , 0) ;
 
-	/**
-	 * unsigned long int inet_addr(const char *cp);
-	 * 
-	 * arg : const char *cp :為一般 ip格式
-	 * return : 將一般在使用的ip格式轉換為 網路使用的binary格式, 失敗則回傳-1
-	 */ 
-	if(this->server_IP_Addr = inet_addr(server_ip) == -1 ){
-		perror("Setting Server IP error!") ;
-		close(client_socket_fd) ;
-		exit(0) ;
-		return -1 ;
-		
-	}
-
-
 	//string serverName ="localhost" ;
 	//struct hostent *server = gethostbyname(serverName.data());
 	//bcopy((char *)server->h_addr,(char *)&serverSocAddr.sin_addr.s_addr, server->h_length);
@@ -98,8 +83,15 @@ int CLIENT::createSocket(){
 	 * uint16_t htons(uint16_t hostshort) : 將ipv4的port number轉換為網路形式
 	 */ 	
 	this->serverSocAddr.sin_family = AF_INET ;
-	this->serverSocAddr.sin_port = htons(serverPortNum) ;
-	this->serverSocAddr.sin_addr.s_addr = server_IP_Addr ;
+	this->serverSocAddr.sin_port = htons((unsigned int)serverPortNum) ;
+
+	/**
+	 * unsigned long int inet_addr(const char *cp);
+	 * 
+	 * arg : const char *cp :為一般 ip格式
+	 * return : 將一般在使用的ip格式轉換為 網路使用的binary格式, 失敗則回傳-1
+	 */ 
+	this->serverSocAddr.sin_addr.s_addr = inet_addr(server_ip) ;
 
 	return client_socket_fd ;
 }
