@@ -49,10 +49,10 @@ Finally, the browser will layout the texts and pictures ,then open a window ,and
 1. For server side ,you should open the port which you want to use ,or the port may be block by your firewall.<br>
 2. At server side :
 
-    ./src/server/Server <ip address of server> <port number of server>
+    ./src/server/Server \<ip address of server\> \<port number of server\>
 
 3. For another computer as client:
 
-    ./build/main <ip address of server> <port number of server>
+    ./build/main \<ip address of server\> \<port number of server\>
 
 Then the client will connect to server computer and open the page by Browser.
