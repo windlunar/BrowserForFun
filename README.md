@@ -18,6 +18,7 @@ And Compile all the source file:
 
     make
 
+<br>
 5. Open a simple html webpage in html_test folder:
 
     ./build/browser
@@ -25,7 +26,7 @@ And Compile all the source file:
 ![image](https://github.com/windlunar/BrowserForFun/blob/main/result/test2.png)
 
 
-##Simple server and client for localhost :
+## Simple server and client :
 
 By default, it will use the localhost which is "127.0.0.1" for testing.<br>
 1.open as server to provide html webpage and image file to clients:
@@ -43,7 +44,7 @@ Finally, the browser will layout the texts and pictures ,then open a window ,and
 ![image](https://github.com/windlunar/BrowserForFun/blob/main/result/test3.png)
 
 
-##Simple server and client on different computer :
+## Simple server and client on different computer :
 
 1. For server side ,you should open the port which you want to use ,or the port may be block by your firewall.<br>
 2. At server side :
