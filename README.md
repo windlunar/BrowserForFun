@@ -28,16 +28,16 @@ And Compile all the source file:
 
 ## Simple server and client :
 
-By default, it will use the localhost which is "127.0.0.1" for testing.<br>
-1.open as server to provide html webpage and image file to clients:
+By default, it will use the localhost which is "127.0.0.1" for testing.<br><br>
+1.open a server to provide html webpage and image file to clients:
 
     ./src/server/Server
 
-2.Then open anathor terminal and move to BrowserForFun:<br>
-3.Execute the binary to open a browser as the client.<br>
+2.Then open anathor terminal and move to BrowserForFun:<br><br>
+3.Execute the binary to open browser as the client.<br>
 The client will send the request to server ,and then download the html webpage first.<br>After parsing the html page by browser ,it will create a dom tree ,and then get the image url info from this dom tree.<br>
 And then the client will send anothor request to download the image files from server.<br>
-Finally, the browser will layout the texts and pictures ,then open a window ,and render all components to the window:
+The layout of texts and pictures will be done by browser ,then create a window and render all components to the window:
 
     ./build/main
 
