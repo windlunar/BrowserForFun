@@ -20,15 +20,16 @@ copy :
 #Clean objects and bin
 .PHONY : clean
 clean :
-	-rm $(bin_destination_path)/*
+	-rm $(bin_destination_path)/main $(bin_destination_path)/browser_test
 	-rm ./src/server/Server
 	-rm ./temp/*
 	touch ./temp/record
 
 #Clean objects and bin
-.PHONY : deltemp
-deltemp :
+.PHONY : cleantemp
+cleantemp :
 	-rm ./temp/*
+	touch ./temp/record
 	
 
 

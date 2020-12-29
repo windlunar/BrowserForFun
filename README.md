@@ -31,7 +31,8 @@ And Compile all the source file:
 By default, it will use the localhost which is "127.0.0.1" for testing.<br><br>
 1.open a server to provide html webpage and image file to clients:
 
-    ./src/server/Server
+    cd ./src/server
+    ./Server
 
 2.Then open anathor terminal and move to BrowserForFun:<br><br>
 3.Execute the binary to open browser as the client.<br>

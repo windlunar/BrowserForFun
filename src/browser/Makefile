@@ -1,7 +1,7 @@
 
 toolchain=g++
 bin_destination_path =../../build
-TARGET=browser
+TARGET=browser_test
 LINK=-lsfml-graphics -lsfml-window -lsfml-system
 SOURCE=parse.cpp loadfile.cpp layout.cpp 
 

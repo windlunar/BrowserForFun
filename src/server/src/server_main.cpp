@@ -22,50 +22,6 @@
 
 using namespace std;
 
-/*************************************************************************************
- * For Thread
- * 
-void *request_handler(void *arg){
-	SERVER *server = (SERVER *)arg ;
-	const char readBuf[32] = {0} ;
-	memset((void *)readBuf ,0 ,sizeof(readBuf)) ;
-	server->getRequest(server->serverfd ,server->clientfd ,readBuf) ;
-
-	string readData = readBuf ;
-	string req ;
-	for(int i=0 ; i<4 ; i++){
-		req += readBuf[i] ;
-	}
-	cout << "req :" << req << endl ;
-	
-	if(req != "GET "){
-		perror("Unknown request.") ;
-	}
-
-	string path ;
-	for(int i=4 ; i<readData.size() ; i++){
-		if(readData[i] == '\0') break ;
-		path += readData[i] ;
-	}
-	cout << "path :" << path << endl ;	
-
-	if(path[1] == '.'){
-		perror("Can't access parent directory.") ;
-	}
-
-	if(path.find("html") != string::npos){
-		cout << "Send html file to client." << endl ;
-		server->sendHtmlFile(server->serverfd ,server->clientfd ,path) ;
-
-	}else if(path.find("jpg") != string::npos){
-		cout << "Send html file to client." << endl ;
-		server->sendImgFile(server->serverfd ,server->clientfd ,path) ;
-	
-	}else{
-		cout << "Not implement Yet!" << endl ;
-	}
-}
-*************************************************************************************/
 
 int req_handler(SERVER *server){
 	const char readBuf[32] = {0} ;
@@ -142,7 +98,6 @@ int main(int argc, char *argv[]) {
 
 	cout << "Run Server..." << endl ;
 	SERVER server(server_ip, server_port) ;
-	//pthread_t thread;
 
 	while(1){
 		
@@ -165,11 +120,6 @@ int main(int argc, char *argv[]) {
 				close(server.clientfd) ;
 				exit(0) ;
 			}
-/*************************************************************************************
-			if(pthread_create(&thread ,NULL ,&request_handler ,&server) != 0 ){
-				perror("Create Thread Error!\n");
-			}
-*************************************************************************************/
 		}
 	}
 	close(server.clientfd) ;
