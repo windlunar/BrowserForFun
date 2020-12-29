@@ -48,11 +48,12 @@ The layout of texts and pictures will be done by browser ,then create a window a
 ## Simple server and client on different computer :
 
 1. For server side ,you should open the port which you want to use ,or the port may be block by your firewall.<br>
-2. At server side :
+2. At server side ,move to BrowserForFun folder:
 
-    ./src/server/Server \<ip address of server\> \<port number of server\>
+    cd ./src/server
+    ./Server \<ip address of server\> \<port number of server\>
 
-3. For another computer as client:
+3. For another computer as client(move to BrowserForFun folder) :
 
     ./build/main \<ip address of server\> \<port number of server\>
 
