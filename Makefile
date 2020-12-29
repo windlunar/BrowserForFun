@@ -24,6 +24,8 @@ clean :
 	-rm ./src/server/Server
 	-rm ./temp/*
 	touch ./temp/record
+	-rm ./build/temp/*
+	touch ./build/temp/record
 
 #Clean objects and bin
 .PHONY : cleantemp
