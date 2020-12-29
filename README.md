@@ -13,7 +13,7 @@
     git clone https://github.com/windlunar/BrowserForFun
 
 <br>
-4.Go to the BrowserForFun folder.
+4.Go to BrowserForFun folder.
 And Compile all the source file:
 
     make
@@ -21,7 +21,7 @@ And Compile all the source file:
 <br>
 5. Open a simple html webpage in html_test folder:
 
-    ./build/browser
+    ./build/browser_test
 
 ![image](https://github.com/windlunar/BrowserForFun/blob/main/result/test2.png)
 
@@ -29,12 +29,12 @@ And Compile all the source file:
 ## Simple server and client :
 
 By default, it will use the localhost which is "127.0.0.1" for testing.<br><br>
-1.open a server to provide html webpage and image file to clients:
+1.Go to BrowserForFun folder ,open a server to provide html webpage and image file to clients:
 
     cd ./src/server
     ./Server
 
-2.Then open anathor terminal and move to BrowserForFun:<br><br>
+2.Then open anathor terminal and move to BrowserForFun folder:<br><br>
 3.Execute the binary to open browser as the client.<br>
 The client will send the request to server ,and then download the html webpage first.<br>After parsing the html page by browser ,it will create a dom tree ,and then get the image url info from this dom tree.<br>
 And then the client will send anothor request to download the image files from server.<br>
