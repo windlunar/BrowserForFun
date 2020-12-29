@@ -52,11 +52,11 @@ The layout of texts and pictures will be done by browser ,then create a window a
 2. At server side ,move to BrowserForFun folder :
 
     cd ./src/server
-    
-    ./Server \<ip address of server\> \<port number of server\>
+
+    ./Server <ip address of server> <port number of server>
 <br>
 3. For another computer as client(move to BrowserForFun folder) :
 
-    ./build/main \<ip address of server\> \<port number of server\>
+    ./build/main <ip address of server> <port number of server>
 <br>
 Then the client will connect to server computer and open the page by Browser.
